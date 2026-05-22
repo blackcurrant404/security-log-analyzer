@@ -1,0 +1,16 @@
+Accepted login from 192.168.1.10 user=admin
+Failed login from 192.168.1.10 user=admin
+Failed login from 192.168.1.10 user=admin
+Failed login from 192.168.1.10 user=admin
+Accepted login from 10.0.0.5 user=john
+Failed login from 10.0.0.5 user=john
+Accepted login from 10.0.0.8 user=maria
+Failed login from 172.16.0.3 user=root
+Failed login from 172.16.0.3 user=root
+Failed login from 172.16.0.3 user=root
+Failed login from 172.16.0.3 user=root
+Accepted login from 172.16.0.3 user=root
+Accepted login from 8.8.8.8 user=system
+Failed login from 8.8.8.8 user=system
+Failed login from 8.8.8.8 user=system
+Failed login from 8.8.8.8 user=system
