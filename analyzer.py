@@ -1,11 +1,14 @@
 import os
 
 def main():
-    read_log()
+    fails, accepts = read_log()
+    print_report(fails, accepts)  
+
 
 def read_log():
-    Fail_counter = 0
-    Accepted_counter = 0
+    ip_dic = {}
+    fail_counter = 0
+    accepted_counter = 0
 
     for file_name in os.listdir("logs"):
         file_path = os.path.join("logs", file_name)
@@ -13,15 +16,28 @@ def read_log():
         with open(file_path) as new_file:   
             for line in new_file:   
                 line = line.split(" ")
+
+                if "from" in line:
+                    ip = line[line.index("from") + 1]
+                    if ip not in ip_dic:
+                        ip_dic[ip] = []
+
+                         
+
                 if line[0] == "Accepted":
-                        Accepted_counter += 1
+                        accepted_counter += 1
                 elif line[0] == "Failed":
-                            Fail_counter += 1
+                        fail_counter += 1
                 else:
-                    raise ValueError     
+                    raise ValueError  
+                
 
-    print_report(Fail_counter, Accepted_counter)  
+                         
 
+    return fail_counter, accepted_counter   
+
+def ip_parsing(line):
+    pass
                     
 def print_report(failed: int, accepted: int):
     with open("results.txt", "w") as new_file:
