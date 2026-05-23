@@ -13,3 +13,8 @@ Idea is to do a log analyzer. In the sample_auth.log file I have some logs for a
 - adds suspicious IPs to the report
 - unknown line handling
 - support for multiple log files
+
+## V3
+- RegEx ip parsing
+- refactor code into smaller functions
+- improve threat detection logic (to be defined)

@@ -30,8 +30,8 @@ def read_log():
                 elif line[0] == "Failed":
                         ip_dict[ip]["failed"] += 1       
                         fail_counter += 1
-                    else:
-                        unknown_lines.append(line)                      
+                else:
+                    unknown_lines.append(line)                      
 
     return fail_counter, accepted_counter, unknown_lines, ip_dict 
 
