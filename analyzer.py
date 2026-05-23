@@ -1,15 +1,16 @@
 import os
 
 def main():
-    fails, accepts, ip_dict = read_log()
+    fails, accepts, unknown_lines, ip_dict = read_log()
     suspicions_list = ip_analysis(ip_dict)
-    print_report(fails, accepts, suspicions_list)  
+    print_report(fails, accepts, unknown_lines, suspicions_list)  
 
 
 def read_log():
     ip_dict = {}
     fail_counter = 0
     accepted_counter = 0
+    unknown_lines = []
 
     for file_name in os.listdir("logs"):
         file_path = os.path.join("logs", file_name)
@@ -29,10 +30,10 @@ def read_log():
                 elif line[0] == "Failed":
                         ip_dict[ip]["failed"] += 1       
                         fail_counter += 1
-                else:
-                    raise ValueError                        
+                    else:
+                        unknown_lines.append(line)                      
 
-    return fail_counter, accepted_counter, ip_dict 
+    return fail_counter, accepted_counter, unknown_lines, ip_dict 
 
 def ip_analysis(ip_dict):
     suspicions_dict = {}
@@ -49,7 +50,7 @@ def ip_analysis(ip_dict):
     return suspicions_dict
         
 
-def print_report(failed_total: int, accepted_total: int, suspicious_dict: dict):
+def print_report(failed_total: int, accepted_total: int, unknown_lines: list, suspicious_dict: dict):
     with open("results.txt", "w") as new_file:
         new_file.write(f"LOG ANALYZER RESULTS:\n\n")        
         new_file.write(f"Failed attempts = {failed_total}\n")
@@ -76,4 +77,8 @@ def print_report(failed_total: int, accepted_total: int, suspicious_dict: dict):
         new_file.write("LOW_THREAT:\n") 
         for ip2 in low_threat_list:
             new_file.write(f"{ip2}\n")
+
+        new_file.write("\n\nUnknown lines:")
+        for line in unknown_lines:
+            new_file.write(line + "\n")
 main()
