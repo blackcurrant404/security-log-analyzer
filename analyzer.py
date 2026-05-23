@@ -1,8 +1,9 @@
 import os
 
 def main():
-    fails, accepts = read_log()
-    print_report(fails, accepts)  
+    fails, accepts, ip_dict = read_log()
+    suspicions_list = ip_analysis(ip_dict)
+    print_report(fails, accepts, ip_dict)  
 
 
 def read_log():
@@ -31,15 +32,27 @@ def read_log():
                 else:
                     raise ValueError                        
 
-    return fail_counter, accepted_counter   
+    return fail_counter, accepted_counter, ip_dict 
 
-def ip_parsing(line):
-    pass
-                    
-def print_report(failed: int, accepted: int):
+def ip_analysis(ip_dict):
+    suspicions_dict = {}
+    attempt_sum = 0
+    for ip in ip_dict:
+        attempt_sum = ip_dict[ip]["accepted"] - ip_dict[ip]["failed"]
+        if attempt_sum < -2:
+            suspicions_dict[ip] = "HIGH-THREAT"
+        elif attempt_sum < -1:
+            suspicions_dict[ip] = "MEDIUM-THREAT"
+        elif attempt_sum < 0:
+             suspicions_dict[ip] = "LOW-THREAT"
+             
+    return suspicions_dict
+        
+
+def print_report(failed_total: int, accepted_total: int, ip_dict: dict):
     with open("results.txt", "w") as new_file:
         new_file.write(f"LOG ANALYZER RESULTS:\n\n")        
-        new_file.write(f"Failed attempts = {failed}\n")
-        new_file.write(f"Accepted attempts = {accepted}\n")
+        new_file.write(f"Failed attempts = {failed_total}\n")
+        new_file.write(f"Accepted attempts = {accepted_total}\n")
 
 main()
