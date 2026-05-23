@@ -6,7 +6,7 @@ def main():
 
 
 def read_log():
-    ip_dic = {}
+    ip_dict = {}
     fail_counter = 0
     accepted_counter = 0
 
@@ -18,21 +18,18 @@ def read_log():
                 line = line.split(" ")
 
                 if "from" in line:
-                    ip = line[line.index("from") + 1]
-                    if ip not in ip_dic:
-                        ip_dic[ip] = []
-
-                         
+                    ip = line[line.index("from") + 1].strip()
+                    if ip not in ip_dict:
+                        ip_dict[ip] = {"accepted": 0, "failed": 0}
 
                 if line[0] == "Accepted":
                         accepted_counter += 1
+                        ip_dict[ip]["accepted"] += 1                  
                 elif line[0] == "Failed":
+                        ip_dict[ip]["failed"] += 1       
                         fail_counter += 1
                 else:
-                    raise ValueError  
-                
-
-                         
+                    raise ValueError                        
 
     return fail_counter, accepted_counter   
 
