@@ -1,4 +1,5 @@
 def print_report(failed_total: int, accepted_total: int, unknown_lines: list, suspicious_dict: dict):
+    
     with open("results.txt", "w") as new_file:
         new_file.write(f"LOG ANALYZER RESULTS:\n\n")        
         new_file.write(f"Failed attempts = {failed_total}\n")

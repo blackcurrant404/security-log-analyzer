@@ -1,4 +1,5 @@
 import os 
+import reg
 
 def read_log():
     ip_dict = {}

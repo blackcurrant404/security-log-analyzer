@@ -13,3 +13,6 @@ __pycache__/
 
 # Analyzer result file
 results.txt
+
+# Sandbox
+sandbox/
