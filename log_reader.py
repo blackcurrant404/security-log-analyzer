@@ -1,7 +1,9 @@
 import os 
-import reg
+import re
 
 def read_log():
+
+    regex_ip = r"\d+\.\d+\.\d+\.\d+"
     ip_dict = {}
     fail_counter = 0
     accepted_counter = 0
@@ -11,21 +13,24 @@ def read_log():
         file_path = os.path.join("logs", file_name)
 
         with open(file_path) as new_file:   
-            for line in new_file:   
-                line = line.split(" ")
+            for line in new_file:
+                result = re.search(regex_ip, line)   
 
-                if "from" in line:
-                    ip = line[line.index("from") + 1].strip()
+                if result:
+                    ip = result.group()
                     if ip not in ip_dict:
                         ip_dict[ip] = {"accepted": 0, "failed": 0}
+                else:
+                    unknown_lines.append(line)  
 
-                if line[0] == "Accepted":
+                if "Accepted" in line:
                         accepted_counter += 1
                         ip_dict[ip]["accepted"] += 1                  
-                elif line[0] == "Failed":
+                elif "Failed" in line:
                         ip_dict[ip]["failed"] += 1       
                         fail_counter += 1
                 else:
-                    unknown_lines.append(line)                      
+                    unknown_lines.append(line)  
+                    
 
     return fail_counter, accepted_counter, unknown_lines, ip_dict 
