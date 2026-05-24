@@ -19,18 +19,17 @@ def read_log():
                 if result:
                     ip = result.group()
                     if ip not in ip_dict:
-                        ip_dict[ip] = {"accepted": 0, "failed": 0}
-                else:
-                    unknown_lines.append(line)  
+                        ip_dict[ip] = {"accepted": 0, "failed": 0, "attempts": []}
 
-                if "Accepted" in line:
-                        accepted_counter += 1
-                        ip_dict[ip]["accepted"] += 1                  
-                elif "Failed" in line:
-                        ip_dict[ip]["failed"] += 1       
-                        fail_counter += 1
+                    if "Accepted" in line:
+                            accepted_counter += 1
+                            ip_dict[ip]["accepted"] += 1 
+                            ip_dict[ip]["attempts"].append("accepted")                
+                    elif "Failed" in line:
+                            ip_dict[ip]["failed"] += 1      
+                            ip_dict[ip]["attempts"].append("failed")  
+                            fail_counter += 1            
                 else:
                     unknown_lines.append(line)  
-                    
 
     return fail_counter, accepted_counter, unknown_lines, ip_dict 

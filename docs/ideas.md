@@ -9,3 +9,8 @@ ip_dict = {
 - change the code so that in def ip_analysis the dictionary keys are the threats and items the IPs. Then later in the results program don't have to sort them again
 - better threat analysis, now it is only based on sum of failed and accepted logins
 - RegEx IP parsing instead of hard coding
+
+Ip threat analysis ideas:
+- calculating the sum of continuos failed attemps. When attempt is success, the number comes back to the zero.
+- a bit better approach than sum of failed and accepted attempts because it's normal to have fails too
+- only continuos failed attempts are suspicious
